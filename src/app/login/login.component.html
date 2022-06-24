@@ -1,5 +1,5 @@
 <mat-card class="login-page">
-  <mat-card-title>Login</mat-card-title>
+  <mat-card-title>Login (Template Driven)</mat-card-title>
   <mat-card-content>
     <form
       class="login-form data-form"
@@ -33,7 +33,26 @@
           #password="ngModel"
           name="password"
           required
+          minlength="3"
+          passwordStrength
         />
+
+        <mat-error *ngIf="password.errors?.required"
+          >Password is mandatory</mat-error
+        >
+
+        <ng-container
+          *ngIf="
+            password.errors
+              | onlyOneError: ['minlength', 'passwordStrength'] as error
+          "
+        >
+          <mat-error *ngIf="error?.minlength">At least 3 chars</mat-error>
+
+          <mat-error *ngIf="error?.passwordStrength"
+            >Password should be more powerfull</mat-error
+          >
+        </ng-container>
       </mat-form-field>
 
       <button
